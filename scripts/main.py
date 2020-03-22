@@ -2,15 +2,18 @@ from bs4 import BeautifulSoup
 import os
 import requests
 
-base_url = 'https://www.eia.gov/dnav/ng/hist/'
-response = requests.get(base_url + 'rngwhhdm.htm')
 
-soup = BeautifulSoup(response.content, 'html.parser')
+def fetch_page(url):
+    base_url = 'https://www.eia.gov/dnav/ng/hist/'
+    response = requests.get(base_url + url)
+    return BeautifulSoup(response.content, 'html.parser')
 
-info = [(a.get_text().lower(), a['href'])
-        for a in soup.find_all(class_='NavChunk')]
 
-pages = [requests.get(base_url + i[1]).content for i in info]
+soup = fetch_page('rngwhhdm.htm')
 
-for page in pages:
-    print(page.prettify())
+links = [(a.get_text().lower(), a['href'])
+         for a in soup.find_all(class_='NavChunk')]
+
+pages = [fetch_page(link[1]) for link in links]
+
+print(pages[0].prettify())
