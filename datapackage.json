@@ -1,0 +1,112 @@
+{
+  "name": "hh-natural-gas-prices",
+  "title": "Henry Hub Gas Prices",
+  "sources": [
+    {
+      "name": "EIA",
+      "path": "http://www.eia.gov/dnav/ng/hist/rngwhhdm.htm",
+      "title": "EIA"
+    }
+  ],
+  "resources": [
+    {
+      "path": "data/annual.csv",
+      "pathType": "local",
+      "name": "annual",
+      "format": "csv",
+      "mediatype": "text/csv",
+      "encoding": "ISO-8859-2",
+      "dialect": {
+        "delimiter": ",",
+        "quoteChar": "\""
+      },
+      "schema": {
+        "fields": [
+          {
+            "name": "Year",
+            "type": "year",
+            "format": "default"
+          },
+          {
+            "name": "Price",
+            "type": "number",
+            "format": "default"
+          }
+        ],
+        "missingValues": [
+          ""
+        ]
+      }
+    },
+    {
+      "path": "data/daily.csv",
+      "pathType": "local",
+      "name": "daily",
+      "format": "csv",
+      "mediatype": "text/csv",
+      "encoding": "ISO-8859-1",
+      "dialect": {
+        "delimiter": ",",
+        "quoteChar": "\""
+      },
+      "schema": {
+        "fields": [
+          {
+            "name": "Date",
+            "type": "string",
+            "format": "default"
+          },
+          {
+            "name": "Price",
+            "type": "number",
+            "format": "default"
+          }
+        ],
+        "missingValues": [
+          ""
+        ]
+      }
+    },
+    {
+      "path": "data/monthly.csv",
+      "pathType": "local",
+      "name": "monthly",
+      "format": "csv",
+      "mediatype": "text/csv",
+      "encoding": "ISO-8859-1",
+      "dialect": {
+        "delimiter": ",",
+        "quoteChar": "\""
+      },
+      "schema": {
+        "fields": [
+          {
+            "name": "Month",
+            "type": "string",
+            "format": "default"
+          },
+          {
+            "name": "Price",
+            "type": "number",
+            "format": "default"
+          }
+        ],
+        "missingValues": [
+          ""
+        ]
+      }
+    }
+  ],
+  "licenses": [
+    {
+      "name": "GNU-GPL",
+      "path": "LICENSE",
+      "title": "GNU GENERAL PUBLIC LICENSE"
+    },
+    {
+      "name": "ODC-PDDL-1.0",
+      "path": "http://opendatacommons.org/licenses/pddl/",
+      "title": "Open Data Commons Public Domain Dedication and License v1.0"
+    }
+  ]
+}
