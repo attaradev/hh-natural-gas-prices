@@ -64,6 +64,22 @@ def get_monthly_data(link):
                 writer.writerow([f'{year} {month} 1', values[i]])
 
 
+def get_annual_data(link):
+    page = fetch_page(link)
+    decades = page.find_all(class_='B4')
+    data_rows = [td.find_parent('tr') for td in decades]
+
+    with open(data_folder/'annual.csv', 'w', newline='') as file:
+        writer = csv.writer(file)
+        writer.writerow(['Year', 'Price'])
+        for data_row in data_rows:
+            decade, *values = [td.get_text() for td in data_row.find_all('td')]
+            decade = decade.strip()[:-3]
+            values = [x if x != '' else '0.00' for x in values]
+            for i, price in enumerate(values):
+                writer.writerow([f'{decade}{i}', price])
+
+
 if __name__ == '__main__':
     soup = fetch_page('rngwhhdm.htm')
 
@@ -72,3 +88,4 @@ if __name__ == '__main__':
 
     get_daily_data(links[0][1])
     get_monthly_data(links[2][1])
+    get_annual_data(links[3][1])
