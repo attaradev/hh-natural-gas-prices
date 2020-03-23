@@ -14,10 +14,9 @@
       "name": "annual",
       "format": "csv",
       "mediatype": "text/csv",
-      "encoding": "ISO-8859-2",
+      "encoding": "utf-8",
       "dialect": {
-        "delimiter": ",",
-        "quoteChar": "\""
+        "delimiter": ","
       },
       "schema": {
         "fields": [
@@ -41,10 +40,9 @@
       "name": "daily",
       "format": "csv",
       "mediatype": "text/csv",
-      "encoding": "ISO-8859-1",
+      "encoding": "utf-8",
       "dialect": {
-        "delimiter": ",",
-        "quoteChar": "\""
+        "delimiter": ","
       },
       "schema": {
         "fields": [
@@ -56,9 +54,6 @@
             "name": "Price",
             "type": "number"
           }
-        ],
-        "missingValues": [
-          ""
         ]
       }
     },
@@ -68,10 +63,9 @@
       "name": "monthly",
       "format": "csv",
       "mediatype": "text/csv",
-      "encoding": "ISO-8859-1",
+      "encoding": "utf-8",
       "dialect": {
-        "delimiter": ",",
-        "quoteChar": "\""
+        "delimiter": ","
       },
       "schema": {
         "fields": [
@@ -83,9 +77,6 @@
             "name": "Price",
             "type": "number"
           }
-        ],
-        "missingValues": [
-          ""
         ]
       }
     }
