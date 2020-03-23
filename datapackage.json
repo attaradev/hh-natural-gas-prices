@@ -74,6 +74,28 @@
           }
         ]
       }
+    },
+    {
+      "path": "data/weekly.csv",
+      "name": "weekly",
+      "format": "csv",
+      "mediatype": "text/csv",
+      "encoding": "utf-8",
+      "dialect": {
+        "delimiter": ","
+      },
+      "schema": {
+        "fields": [
+          {
+            "name": "Week Ending",
+            "type": "string"
+          },
+          {
+            "name": "Price",
+            "type": "number"
+          }
+        ]
+      }
     }
   ],
   "licenses": [
