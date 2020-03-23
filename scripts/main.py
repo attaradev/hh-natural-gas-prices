@@ -3,7 +3,15 @@ from pathlib import Path
 import requests
 import csv
 
-data_folder = Path(__file__).parent/'../data/'
+data_folder = Path(__file__).parent / '../data/'
+
+
+def isFloat(value):
+    try:
+        float(value)
+        return True
+    except:
+        return False
 
 
 def fetch_page(url):
@@ -23,8 +31,7 @@ def get_daily_data(link):
         for data_row in data_rows:
             [week, *values] = [td.get_text().strip()
                                for td in data_row.find_all('td')]
-            values = [x if (x != '' or x != 'NA' or x !=
-                            'W') else 0.00 for x in values]
+            values = [x if isFloat(x) else 0.00 for x in values]
             year = week[:4]
             start_month = week[5:8]
             start_date = int(week[9:11])
@@ -62,8 +69,7 @@ def get_monthly_data(link):
                       'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
             [year, *values] = [td.get_text().strip()
                                for td in data_row.find_all('td')]
-            values = [x if (x != '' or x != 'NA' or x !=
-                            'W') else 0.00 for x in values]
+            values = [x if isFloat(x) else 0.00 for x in values]
             for i, month in enumerate(months):
                 writer.writerow([f'{year} {month} 1', values[i]])
 
@@ -81,8 +87,7 @@ def get_annual_data(link):
                 values] = [td.get_text().strip()
                            for td in data_row.find_all('td')]
             decade = decade[:-3]
-            values = [x if (x != '' or x != 'NA' or x !=
-                            'W') else 0.00 for x in values]
+            values = [x if isFloat(x) else 0.00 for x in values]
             for i, price in enumerate(values):
                 writer.writerow([f'{decade}{i}', price])
 
@@ -102,7 +107,8 @@ def get_weekly_data(link):
 
             values = [(week_1_end_date, week_1_value), (week_2_end_date, week_2_value),
                       (week_3_end_date, week_3_value), (week_4_end_date, week_4_value), (week_5_end_date, week_5_value)]
-            values = [(v[0][-2:], v[1]) for v in values if v[0] != '']
+            values = [(v[0][-2:], v[1])
+                      for v in values if v[0] != '']
             for data in values:
                 writer.writerow([f'{year} {mon} {data[0]}', data[1]])
 
