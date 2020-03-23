@@ -2,9 +2,9 @@ EIA, U.S. Energy Information administration provides history and updates on the 
 
 ## Listing page for Natural Gas Prices history
 
-Daily - https://www.eia.gov/dnav/ng/hist/rngwhhdD.htm
-Monthly - https://www.eia.gov/dnav/ng/hist/rngwhhdM.htm
-Annually - https://www.eia.gov/dnav/ng/hist/rngwhhdA.htm
+- Daily - https://www.eia.gov/dnav/ng/hist/rngwhhdD.htm
+- Monthly - https://www.eia.gov/dnav/ng/hist/rngwhhdM.htm
+- Annually - https://www.eia.gov/dnav/ng/hist/rngwhhdA.htm
 
 ## Data
 
