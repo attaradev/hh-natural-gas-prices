@@ -9,7 +9,7 @@ EIA, U.S. Energy Information administration provides history and updates on the 
 
 ## Data
 
-The data is extracted and normalized and saved into 3 files:
+The data is extracted and normalized and saved into 4 files:
 
 - Annual - `data/annual.csv` - annual prices
 - Daily - `data/daily.csv` - daily prices
