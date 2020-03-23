@@ -21,8 +21,8 @@ def get_daily_data(link):
         writer = csv.writer(file)
         writer.writerow(['Date', 'Price'])
         for data_row in data_rows:
-            week, *values = [td.get_text().strip()
-                             for td in data_row.find_all('td')]
+            [week, *values] = [td.get_text().strip()
+                               for td in data_row.find_all('td')]
             values = [x if x != '' else 0.00 for x in values]
             year = week[:4]
             start_month = week[5:8]
@@ -57,8 +57,8 @@ def get_monthly_data(link):
         for data_row in data_rows:
             months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
                       'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
-            year, *values = [td.get_text().strip()
-                             for td in data_row.find_all('td')]
+            [year, *values] = [td.get_text().strip()
+                               for td in data_row.find_all('td')]
             values = [x if x != '' else 0.00 for x in values]
             for i, month in enumerate(months):
                 writer.writerow([f'{year} {month} 1', float(values[i])])
@@ -73,9 +73,9 @@ def get_annual_data(link):
         writer = csv.writer(file)
         writer.writerow(['Year', 'Price'])
         for data_row in data_rows:
-            decade, * \
-                values = [td.get_text().strip()
-                          for td in data_row.find_all('td')]
+            [decade, *
+                values] = [td.get_text().strip()
+                           for td in data_row.find_all('td')]
             decade = decade[:-3]
             values = [x if x != '' else 0.00 for x in values]
             for i, price in enumerate(values):
