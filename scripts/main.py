@@ -1,12 +1,15 @@
-from bs4 import BeautifulSoup
-from pathlib import Path
 import requests
 import csv
+from bs4 import BeautifulSoup
+from pathlib import Path
 
 data_folder = Path(__file__).parent / '../data/'
 
 
 def isFloat(value):
+    """
+    Returns True when a value can be cast as float else return False
+    """
     try:
         float(value)
         return True
@@ -15,12 +18,18 @@ def isFloat(value):
 
 
 def fetch_page(url):
+    """
+    Fetches and return a soup instance of a page for the provided partial url
+    """
     base_url = 'https://www.eia.gov/dnav/ng/hist/'
     response = requests.get(base_url + url)
     return BeautifulSoup(response.content, 'html.parser')
 
 
 def get_daily_data(link):
+    """
+    Writes daily gas prices to a csv
+    """
     page = fetch_page(link)
     dates = page.find_all(class_='B6')
     data_rows = [td.find_parent('tr') for td in dates]
@@ -57,6 +66,9 @@ def get_daily_data(link):
 
 
 def get_monthly_data(link):
+    """
+    Writes monthly gas prices to a csv
+    """
     page = fetch_page(link)
     years = page.find_all(class_='B4')
     data_rows = [td.find_parent('tr') for td in years]
@@ -75,6 +87,9 @@ def get_monthly_data(link):
 
 
 def get_annual_data(link):
+    """
+    Writes annual gas prices to a csv
+    """
     page = fetch_page(link)
     decades = page.find_all(class_='B4')
     data_rows = [td.find_parent('tr') for td in decades]
@@ -93,6 +108,9 @@ def get_annual_data(link):
 
 
 def get_weekly_data(link):
+    """
+    Writes weekly gas prices to a csv
+    """
     page = fetch_page(link)
     month = page.find_all(class_='B6')
     data_rows = [td.find_parent('tr') for td in month]
