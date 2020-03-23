@@ -23,8 +23,8 @@ def get_daily_data(link):
         for data_row in data_rows:
             [week, *values] = [td.get_text().strip()
                                for td in data_row.find_all('td')]
-            values = [x if x != '' or x != 'NA' or x !=
-                      'W' else 0.00 for x in values]
+            values = [x if (x != '' or x != 'NA' or x !=
+                            'W') else 0.00 for x in values]
             year = week[:4]
             start_month = week[5:8]
             start_date = int(week[9:11])
@@ -62,10 +62,10 @@ def get_monthly_data(link):
                       'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
             [year, *values] = [td.get_text().strip()
                                for td in data_row.find_all('td')]
-            values = [x if x != '' or x != 'NA' or x !=
-                      'W' else 0.00 for x in values]
+            values = [x if (x != '' or x != 'NA' or x !=
+                            'W') else 0.00 for x in values]
             for i, month in enumerate(months):
-                writer.writerow([f'{year} {month} 1', float(values[i])])
+                writer.writerow([f'{year} {month} 1', values[i]])
 
 
 def get_annual_data(link):
@@ -81,8 +81,8 @@ def get_annual_data(link):
                 values] = [td.get_text().strip()
                            for td in data_row.find_all('td')]
             decade = decade[:-3]
-            values = [x if x != '' or x != 'NA' or x !=
-                      'W' else 0.00 for x in values]
+            values = [x if (x != '' or x != 'NA' or x !=
+                            'W') else 0.00 for x in values]
             for i, price in enumerate(values):
                 writer.writerow([f'{decade}{i}', price])
 
