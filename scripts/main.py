@@ -3,6 +3,8 @@ from pathlib import Path
 import requests
 import csv
 
+data_folder = Path(__file__).parent/'../data/'
+
 
 def fetch_page(url):
     base_url = 'https://www.eia.gov/dnav/ng/hist/'
@@ -10,20 +12,12 @@ def fetch_page(url):
     return BeautifulSoup(response.content, 'html.parser')
 
 
-data_folder = Path('./../data/')
-
-soup = fetch_page('rngwhhdm.htm')
-
-links = [(a.get_text().lower(), a['href'])
-         for a in soup.find_all(class_='NavChunk')]
-
-
 def get_daily_data(link):
     page = fetch_page(link)
     dates = page.find_all(class_='B6')
     data_rows = [td.find_parent('tr') for td in dates]
 
-    with open('daily.csv', 'w', newline='') as file:
+    with open(data_folder/'daily.csv', 'w', newline='') as file:
         writer = csv.writer(file)
         writer.writerow(['Date', 'Price'])
         for data_row in data_rows:
@@ -52,15 +46,12 @@ def get_daily_data(link):
                     date = date + 1
 
 
-get_daily_data(links[0][1])
-
-
 def get_monthly_data(link):
     page = fetch_page(link)
     years = page.find_all(class_='B4')
     data_rows = [td.find_parent('tr') for td in years]
 
-    with open('monthly.csv', 'w', newline='') as file:
+    with open(data_folder/'monthly.csv', 'w', newline='') as file:
         writer = csv.writer(file)
         writer.writerow(['Date', 'Price'])
         for data_row in data_rows:
@@ -73,4 +64,11 @@ def get_monthly_data(link):
                 writer.writerow([f'{year} {month} 1', values[i]])
 
 
-get_monthly_data(links[2][1])
+soup = fetch_page('rngwhhdm.htm')
+
+links = [(a.get_text().lower(), a['href'])
+         for a in soup.find_all(class_='NavChunk')]
+
+if __name__ == '__main__':
+    get_daily_data(links[0][1])
+    get_monthly_data(links[2][1])
