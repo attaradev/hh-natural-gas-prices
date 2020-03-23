@@ -20,4 +20,4 @@ Code to extract the data from the source EIA Website is in the `scripts` directo
 
 ## License
 
-This Data Package is licensed by its maintainers under the Public Domain Dedication and License (PDDL).
+This Data Package is licensed by its maintainers under the Public Domain Dedication and License (PDDL) as well as the [GNU LICENSE](LICENSE).
