@@ -53,7 +53,7 @@ def get_monthly_data(link):
 
     with open(data_folder/'monthly.csv', 'w', newline='') as file:
         writer = csv.writer(file)
-        writer.writerow(['Date', 'Price'])
+        writer.writerow(['Month', 'Price'])
         for data_row in data_rows:
             months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
                       'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
@@ -64,11 +64,11 @@ def get_monthly_data(link):
                 writer.writerow([f'{year} {month} 1', values[i]])
 
 
-soup = fetch_page('rngwhhdm.htm')
-
-links = [(a.get_text().lower(), a['href'])
-         for a in soup.find_all(class_='NavChunk')]
-
 if __name__ == '__main__':
+    soup = fetch_page('rngwhhdm.htm')
+
+    links = [(a.get_text().lower(), a['href'])
+             for a in soup.find_all(class_='NavChunk')]
+
     get_daily_data(links[0][1])
     get_monthly_data(links[2][1])
