@@ -11,7 +11,6 @@
   "resources": [
     {
       "path": "data/annual.csv",
-      "pathType": "local",
       "name": "annual",
       "format": "csv",
       "mediatype": "text/csv",
@@ -24,13 +23,11 @@
         "fields": [
           {
             "name": "Year",
-            "type": "year",
-            "format": "default"
+            "type": "year"
           },
           {
             "name": "Price",
-            "type": "number",
-            "format": "default"
+            "type": "number"
           }
         ],
         "missingValues": [
@@ -53,13 +50,11 @@
         "fields": [
           {
             "name": "Date",
-            "type": "string",
-            "format": "default"
+            "type": "string"
           },
           {
             "name": "Price",
-            "type": "number",
-            "format": "default"
+            "type": "number"
           }
         ],
         "missingValues": [
@@ -82,13 +77,11 @@
         "fields": [
           {
             "name": "Month",
-            "type": "string",
-            "format": "default"
+            "type": "string"
           },
           {
             "name": "Price",
-            "type": "number",
-            "format": "default"
+            "type": "number"
           }
         ],
         "missingValues": [
