@@ -23,7 +23,8 @@ def get_daily_data(link):
         for data_row in data_rows:
             [week, *values] = [td.get_text().strip()
                                for td in data_row.find_all('td')]
-            values = [x if x != '' else 0.00 for x in values]
+            values = [x if x != '' or x != 'NA' or x !=
+                      'W' else 0.00 for x in values]
             year = week[:4]
             start_month = week[5:8]
             start_date = int(week[9:11])
@@ -39,6 +40,8 @@ def get_daily_data(link):
                     data_date = f'{year} {start_month} {date}'
                     writer.writerow([data_date, values[i]])
                 date = 1
+                if end_month == 'Jan':
+                    year = int(year) + 1
                 while date <= end_date:
                     index = date - (end_date + 1)
                     data_date = f'{year} {end_month} {date}'
