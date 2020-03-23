@@ -28,15 +28,11 @@
             "name": "Price",
             "type": "number"
           }
-        ],
-        "missingValues": [
-          ""
         ]
       }
     },
     {
       "path": "data/daily.csv",
-      "pathType": "local",
       "name": "daily",
       "format": "csv",
       "mediatype": "text/csv",
@@ -59,7 +55,6 @@
     },
     {
       "path": "data/monthly.csv",
-      "pathType": "local",
       "name": "monthly",
       "format": "csv",
       "mediatype": "text/csv",
