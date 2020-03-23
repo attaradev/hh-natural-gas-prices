@@ -83,9 +83,9 @@ def get_annual_data(link):
 if __name__ == '__main__':
     soup = fetch_page('rngwhhdm.htm')
 
-    links = [(a.get_text().lower(), a['href'])
+    links = [a['href']
              for a in soup.find_all(class_='NavChunk')]
 
-    get_daily_data(links[0][1])
-    get_monthly_data(links[2][1])
-    get_annual_data(links[3][1])
+    get_daily_data(links[0])
+    get_monthly_data(links[2])
+    get_annual_data(links[3])
