@@ -79,21 +79,22 @@ def get_monthly_data(link):
     """
     Writes monthly gas prices to a csv
     """
+    monthly_data = [['Month', 'Price']]
     page = fetch_page(link)
     years = page.find_all(class_='B4')
     data_rows = [td.find_parent('tr') for td in years]
 
-    with open(data_folder/'monthly.csv', 'w', newline='') as file:
-        writer = csv.writer(file)
-        writer.writerow(['Month', 'Price'])
-        for data_row in data_rows:
-            months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
-                      'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
-            [year, *values] = [td.get_text().strip()
-                               for td in data_row.find_all('td')]
-            values = [x if isFloat(x) else 0.00 for x in values]
-            for i, month in enumerate(months):
-                writer.writerow([f'{year} {month} 1', values[i]])
+    for data_row in data_rows:
+        months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+                  'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+        [year, *values] = [td.get_text().strip()
+                           for td in data_row.find_all('td')]
+        values = [x if isFloat(x) else 0.00 for x in values]
+
+        for i, month in enumerate(months):
+            monthly_data.append([f'{year} {month} 1', values[i]])
+
+    return monthly_data
 
 
 def get_annual_data(link):
