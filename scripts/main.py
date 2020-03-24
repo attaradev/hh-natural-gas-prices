@@ -63,9 +63,10 @@ def get_daily_data(link):
                 data_date = f'{year} {start_month} {date}'
                 daily_data.append([data_date, values[i]])
 
-            date = 1
             if end_month == 'Jan':
                 year = int(year) + 1
+
+            date = 1
             while date <= end_date:
                 index = date - (end_date + 1)
                 data_date = f'{year} {end_month} {date}'
