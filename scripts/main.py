@@ -6,6 +6,15 @@ from pathlib import Path
 data_folder = Path(__file__).parent / '../data/'
 
 
+def write_csv(file_name, data):
+    """
+    Writes a data to csv file
+    """
+    with open(data_folder / file_name, 'w', newline='') as file:
+        writer = csv.writer(file)
+        writer.writerows(data)
+
+
 def isFloat(value):
     """
     Returns True when a value can be cast as float else return False
