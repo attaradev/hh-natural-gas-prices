@@ -53,6 +53,7 @@ def get_daily_data(link):
         start_date = int(week[9:11])
         end_month = week[-6:-3]
         end_date = int(week[-2:])
+
         if start_month == end_month:
             for i, date in enumerate(range(start_date, end_date + 1)):
                 data_date = f'{year} {start_month} {date}'
