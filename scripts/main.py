@@ -1,28 +1,28 @@
-import requests
 import csv
-from bs4 import BeautifulSoup
 from pathlib import Path
+import requests
+from bs4 import BeautifulSoup
 
-data_folder = Path(__file__).parent / '../data/'
+DATA_FOLDER = Path(__file__).parent / '../data/'
 
 
 def write_csv(file_name, data):
     """
     Writes a data to csv file
     """
-    with open(data_folder / file_name, 'w', newline='') as file:
+    with open(DATA_FOLDER / file_name, 'w', newline='') as file:
         writer = csv.writer(file)
         writer.writerows(data)
 
 
-def isFloat(value):
+def is_float(value):
     """
     Returns True when a value can be cast as float else return False
     """
     try:
         float(value)
         return True
-    except:
+    except ValueError:
         return False
 
 
@@ -47,7 +47,7 @@ def get_daily_data(link):
     for data_row in data_rows:
         [week, *values] = [td.get_text().strip()
                            for td in data_row.find_all('td')]
-        values = [x if isFloat(x) else 0.00 for x in values]
+        values = [x if is_float(x) else 0.00 for x in values]
         year = week[:4]
         start_month = week[5:8]
         start_date = int(week[9:11])
@@ -89,7 +89,7 @@ def get_monthly_data(link):
                   'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
         [year, *values] = [td.get_text().strip()
                            for td in data_row.find_all('td')]
-        values = [x if isFloat(x) else 0.00 for x in values]
+        values = [x if is_float(x) else 0.00 for x in values]
 
         for i, month in enumerate(months):
             monthly_data.append([f'{year} {month} 1', values[i]])
@@ -111,7 +111,7 @@ def get_annual_data(link):
          values] = [td.get_text().strip()
                     for td in data_row.find_all('td')]
         decade = decade[:-3]
-        values = [x if isFloat(x) else 0.00 for x in values]
+        values = [x if is_float(x) else 0.00 for x in values]
 
         for i, price in enumerate(values):
             annual_data.append([f'{decade}{i}', price])
@@ -145,12 +145,12 @@ def get_weekly_data(link):
 
 
 if __name__ == '__main__':
-    soup = fetch_page('rngwhhdm.htm')
+    SOUP = fetch_page('rngwhhdm.htm')
 
-    links = [a['href']
-             for a in soup.find_all(class_='NavChunk')]
+    LINKS = [a['href']
+             for a in SOUP.find_all(class_='NavChunk')]
 
-    write_csv('daily.csv', get_daily_data(links[0]))
-    write_csv('weekly.csv', get_weekly_data(links[1]))
-    write_csv('monthly.csv', get_monthly_data(links[2]))
-    write_csv('annual.csv', get_annual_data(links[3]))
+    write_csv('daily.csv', get_daily_data(LINKS[0]))
+    write_csv('weekly.csv', get_weekly_data(LINKS[1]))
+    write_csv('monthly.csv', get_monthly_data(LINKS[2]))
+    write_csv('annual.csv', get_annual_data(LINKS[3]))
