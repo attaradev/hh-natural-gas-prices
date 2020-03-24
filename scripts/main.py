@@ -99,23 +99,24 @@ def get_monthly_data(link):
 
 def get_annual_data(link):
     """
-    Writes annual gas prices to a csv
+    Get annual gas prices from link
     """
+    annual_data = [['Year', 'Price']]
     page = fetch_page(link)
     decades = page.find_all(class_='B4')
     data_rows = [td.find_parent('tr') for td in decades]
 
-    with open(data_folder/'annual.csv', 'w', newline='') as file:
-        writer = csv.writer(file)
-        writer.writerow(['Year', 'Price'])
-        for data_row in data_rows:
-            [decade, *
-                values] = [td.get_text().strip()
-                           for td in data_row.find_all('td')]
-            decade = decade[:-3]
-            values = [x if isFloat(x) else 0.00 for x in values]
-            for i, price in enumerate(values):
-                writer.writerow([f'{decade}{i}', price])
+    for data_row in data_rows:
+        [decade, *
+         values] = [td.get_text().strip()
+                    for td in data_row.find_all('td')]
+        decade = decade[:-3]
+        values = [x if isFloat(x) else 0.00 for x in values]
+
+        for i, price in enumerate(values):
+            annual_data.append([f'{decade}{i}', price])
+
+    return annual_data
 
 
 def get_weekly_data(link):
