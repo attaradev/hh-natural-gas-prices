@@ -26,12 +26,11 @@ def is_float(value):
         return False
 
 
-def fetch_page(url):
+def fetch_page(link):
     """
-    Fetches and return a soup instance of a page for the provided partial url
+    Fetches and return a soup instance of a page for the provided partial link
     """
-    base_url = 'https://www.eia.gov/dnav/ng/hist/'
-    response = requests.get(base_url + url)
+    response = requests.get('https://www.eia.gov/dnav/ng/hist/' + link)
     return BeautifulSoup(response.content, 'html.parser')
 
 
