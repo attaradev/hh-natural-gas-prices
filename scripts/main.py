@@ -1,3 +1,5 @@
+"""Get Natural Gas Prices from EIA Website and write data to csv"""
+
 import csv
 from pathlib import Path
 import requests
