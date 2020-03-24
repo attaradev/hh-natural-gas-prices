@@ -152,5 +152,5 @@ if __name__ == '__main__':
 
     write_csv('daily.csv', get_daily_data(links[0]))
     write_csv('weekly.csv', get_weekly_data(links[1]))
-    write_csv('weekly.csv', get_monthly_data(links[2]))
+    write_csv('monthly.csv', get_monthly_data(links[2]))
     write_csv('annual.csv', get_annual_data(links[3]))
