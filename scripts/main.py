@@ -42,8 +42,7 @@ def get_daily_data(link):
     """
     daily_data = [['Date', 'Price']]
     page = fetch_page(link)
-    dates = page.find_all(class_='B6')
-    data_rows = [td.find_parent('tr') for td in dates]
+    data_rows = [td.find_parent('tr') for td in page.find_all(class_='B6')]
 
     for data_row in data_rows:
         [week, *values] = [td.get_text().strip()
@@ -83,8 +82,7 @@ def get_monthly_data(link):
     """
     monthly_data = [['Month', 'Price']]
     page = fetch_page(link)
-    years = page.find_all(class_='B4')
-    data_rows = [td.find_parent('tr') for td in years]
+    data_rows = [td.find_parent('tr') for td in page.find_all(class_='B4')]
 
     for data_row in data_rows:
         months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
@@ -105,8 +103,7 @@ def get_annual_data(link):
     """
     annual_data = [['Year', 'Price']]
     page = fetch_page(link)
-    decades = page.find_all(class_='B4')
-    data_rows = [td.find_parent('tr') for td in decades]
+    data_rows = [td.find_parent('tr') for td in page.find_all(class_='B4')]
 
     for data_row in data_rows:
         [decade, *
@@ -127,21 +124,25 @@ def get_weekly_data(link):
     """
     weekly_data = [['Week Ending', 'Price']]
     page = fetch_page(link)
-    month = page.find_all(class_='B6')
-    data_rows = [td.find_parent('tr') for td in month]
+    data_rows = [td.find_parent('tr') for td in page.find_all(class_='B6')]
 
     for data_row in data_rows:
-        [month, week_1_end_date, week_1_value, week_2_end_date, week_2_value, week_3_end_date, week_3_value, week_4_end_date, week_4_value, week_5_end_date, week_5_value] = [
-            td.get_text().strip() for td in data_row.find_all('td')]
-        [year, mon] = month.split('-')
+        [month, week_1_end_date, week_1_value,
+         week_2_end_date, week_2_value,
+         week_3_end_date, week_3_value,
+         week_4_end_date, week_4_value,
+         week_5_end_date, week_5_value] = [td.get_text().strip() for td in data_row.find_all('td')]
 
-        values = [(week_1_end_date, week_1_value), (week_2_end_date, week_2_value),
-                  (week_3_end_date, week_3_value), (week_4_end_date, week_4_value), (week_5_end_date, week_5_value)]
-        values = [(v[0][-2:], v[1])
-                  for v in values if v[0] != '']
+        year, month = month.split('-')
+        values = [(week_1_end_date, week_1_value),
+                  (week_2_end_date, week_2_value),
+                  (week_3_end_date, week_3_value),
+                  (week_4_end_date, week_4_value),
+                  (week_5_end_date, week_5_value)]
+        values = [(v[0][-2:], v[1]) for v in values if v[0] != '']
 
         for data in values:
-            weekly_data.append([f'{year} {mon} {data[0]}', data[1]])
+            weekly_data.append([f'{year} {month} {data[0]}', data[1]])
 
     return weekly_data
 
