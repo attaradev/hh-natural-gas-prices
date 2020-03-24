@@ -121,26 +121,27 @@ def get_annual_data(link):
 
 def get_weekly_data(link):
     """
-    Writes weekly gas prices to a csv
+    Get weekly gas prices from link
     """
+    weekly_data = [['Week Ending', 'Price']]
     page = fetch_page(link)
     month = page.find_all(class_='B6')
     data_rows = [td.find_parent('tr') for td in month]
 
-    with open(data_folder/'weekly.csv', 'w', newline='') as file:
-        writer = csv.writer(file)
-        writer.writerow(['Week Ending', 'Price'])
-        for data_row in data_rows:
-            [month, week_1_end_date, week_1_value, week_2_end_date, week_2_value, week_3_end_date, week_3_value, week_4_end_date, week_4_value, week_5_end_date, week_5_value] = [
-                td.get_text().strip() for td in data_row.find_all('td')]
-            [year, mon] = month.split('-')
+    for data_row in data_rows:
+        [month, week_1_end_date, week_1_value, week_2_end_date, week_2_value, week_3_end_date, week_3_value, week_4_end_date, week_4_value, week_5_end_date, week_5_value] = [
+            td.get_text().strip() for td in data_row.find_all('td')]
+        [year, mon] = month.split('-')
 
-            values = [(week_1_end_date, week_1_value), (week_2_end_date, week_2_value),
-                      (week_3_end_date, week_3_value), (week_4_end_date, week_4_value), (week_5_end_date, week_5_value)]
-            values = [(v[0][-2:], v[1])
-                      for v in values if v[0] != '']
-            for data in values:
-                writer.writerow([f'{year} {mon} {data[0]}', data[1]])
+        values = [(week_1_end_date, week_1_value), (week_2_end_date, week_2_value),
+                  (week_3_end_date, week_3_value), (week_4_end_date, week_4_value), (week_5_end_date, week_5_value)]
+        values = [(v[0][-2:], v[1])
+                  for v in values if v[0] != '']
+
+        for data in values:
+            weekly_data.append([f'{year} {mon} {data[0]}', data[1]])
+
+    return weekly_data
 
 
 if __name__ == '__main__':
