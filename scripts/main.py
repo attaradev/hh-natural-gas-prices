@@ -77,7 +77,7 @@ def get_daily_data(link):
 
 def get_monthly_data(link):
     """
-    Writes monthly gas prices to a csv
+    Get monthly gas prices from link
     """
     monthly_data = [['Month', 'Price']]
     page = fetch_page(link)
