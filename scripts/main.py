@@ -37,41 +37,42 @@ def fetch_page(url):
 
 def get_daily_data(link):
     """
-    Writes daily gas prices to a csv
+    Get daily gas prices from link
     """
+    daily_data = [['Date', 'Price']]
     page = fetch_page(link)
     dates = page.find_all(class_='B6')
     data_rows = [td.find_parent('tr') for td in dates]
 
-    with open(data_folder/'daily.csv', 'w', newline='') as file:
-        writer = csv.writer(file)
-        writer.writerow(['Date', 'Price'])
-        for data_row in data_rows:
-            [week, *values] = [td.get_text().strip()
-                               for td in data_row.find_all('td')]
-            values = [x if isFloat(x) else 0.00 for x in values]
-            year = week[:4]
-            start_month = week[5:8]
-            start_date = int(week[9:11])
-            end_month = week[-6:-3]
-            end_date = int(week[-2:])
-            if start_month == end_month:
-                for i, date in enumerate(range(start_date, end_date + 1)):
-                    data_date = f'{year} {start_month} {date}'
-                    writer.writerow([data_date, values[i]])
-            else:
-                range_end = (4 - end_date) + start_date + 1
-                for i, date in enumerate(range(start_date, range_end)):
-                    data_date = f'{year} {start_month} {date}'
-                    writer.writerow([data_date, values[i]])
-                date = 1
-                if end_month == 'Jan':
-                    year = int(year) + 1
-                while date <= end_date:
-                    index = date - (end_date + 1)
-                    data_date = f'{year} {end_month} {date}'
-                    writer.writerow([data_date, values[index]])
-                    date = date + 1
+    for data_row in data_rows:
+        [week, *values] = [td.get_text().strip()
+                           for td in data_row.find_all('td')]
+        values = [x if isFloat(x) else 0.00 for x in values]
+        year = week[:4]
+        start_month = week[5:8]
+        start_date = int(week[9:11])
+        end_month = week[-6:-3]
+        end_date = int(week[-2:])
+        if start_month == end_month:
+            for i, date in enumerate(range(start_date, end_date + 1)):
+                data_date = f'{year} {start_month} {date}'
+                daily_data.append([data_date, values[i]])
+        else:
+            range_end = (4 - end_date) + start_date + 1
+            for i, date in enumerate(range(start_date, range_end)):
+                data_date = f'{year} {start_month} {date}'
+                daily_data.append([data_date, values[i]])
+
+            date = 1
+            if end_month == 'Jan':
+                year = int(year) + 1
+            while date <= end_date:
+                index = date - (end_date + 1)
+                data_date = f'{year} {end_month} {date}'
+                daily_data.append([data_date, values[index]])
+                date = date + 1
+
+    return daily_data
 
 
 def get_monthly_data(link):
