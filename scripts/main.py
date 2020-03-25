@@ -59,7 +59,7 @@ def get_daily_data(link):
                 data_date = f'{year} {start_month} {date}'
                 daily_data.append([data_date, values[i]])
         else:
-            range_end = (4 - end_date) + start_date + 1
+            range_end = start_date + (5 - end_date)
             for i, date in enumerate(range(start_date, range_end)):
                 data_date = f'{year} {start_month} {date}'
                 daily_data.append([data_date, values[i]])
